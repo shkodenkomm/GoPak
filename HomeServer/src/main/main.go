@@ -1,7 +1,9 @@
 package main 
 
 import (
+    "log"
     "net/http"
+    "github.com/gorilla/mux"
     "fmt"
 )
 
@@ -11,6 +13,7 @@ func defaultHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
-    http.HandleFunc("/", defaultHandler)
-    http.ListenAndServe(":8080", nil)
+	router := mux.NewRouter()
+    router.HandleFunc("/", defaultHandler).Methods("GET")
+    log.Fatal(http.ListenAndServe(":8080", router))
 }
